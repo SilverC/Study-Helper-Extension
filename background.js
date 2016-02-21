@@ -21,8 +21,6 @@ function interceptRequest(request)
     }
 }
 
-chrome.webRequest.onBeforeRequest.addListener(interceptRequest, {urls: ["<all_urls>"]}, ['blocking']);
-
 /*
  * Handles messages for button states
  */
@@ -36,3 +34,4 @@ function buttonStateHandler(request, sender, sendResponse) {
 }
 
 chrome.extension.onMessage.addListener(buttonStateHandler);
+chrome.webRequest.onBeforeRequest.addListener(interceptRequest, {urls: ["<all_urls>"]}, ['blocking']);
