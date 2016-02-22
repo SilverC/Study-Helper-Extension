@@ -1,5 +1,4 @@
 # Study-Helper-Extension
-Study Helper Extension
 
 Current location of the Chrome Browser Study Helper extension.
 
