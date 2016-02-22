@@ -13,7 +13,7 @@ function interceptRequest(request)
             for(var url of urls) {
                 if(request.url.indexOf(url) > -1)
                 {
-                    return {redirectUrl: chrome.extension.getURL("blocked.html")};
+                    return {redirectUrl: chrome.extension.getURL("html/blocked.html")};
                 }  
             }
             
