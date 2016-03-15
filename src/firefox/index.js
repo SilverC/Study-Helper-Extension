@@ -1,17 +1,44 @@
-var buttons = require('sdk/ui/button/action');
-var tabs = require("sdk/tabs");
+var { ToggleButton } = require('sdk/ui/button/toggle');
+var panels = require("sdk/panel");
+var self = require("sdk/self");
+var state = true;
 
-var button = buttons.ActionButton({
-  id: "Study Helper Popup",
-  label: "Study Helper",
+var button = ToggleButton({
+  id: "my-button",
+  label: "my button",
   icon: {
     "16": "./images/icon-16.png",
     "32": "./images/icon-32.png",
     "64": "./images/icon-64.png"
   },
-  onClick: handleClick
+  onChange: handleChange
 });
 
-function handleClick(state) {
-  tabs.open("http://www.mozilla.org/");
+var panel = panels.Panel({
+  contentURL: self.data.url("./html/popup.html"),
+  onHide: handleHide,
+  onMessage: handleMessage
+});
+
+function handleMessage(message) {
+    console.log("message received in addon")
+    if(message.cmd == 'GetButtonState') {
+        panel.PostMessage(state)
+    }
+    else if(message.cmd == 'SetButtonState') {
+        state = message.value;
+    }
+}
+
+function handleChange(state) {
+  if (state.checked) {
+    panel.show({
+      position: button
+    });
+  }
+}
+
+function handleHide() {
+  button.state('window', {checked: false});
+  self.on(self postmessage, )
 }
