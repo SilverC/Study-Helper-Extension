@@ -7,7 +7,6 @@ function setButtonState(state) {
 }
 
 function getButtonState() {
-    console.log("getButtonState");
     self.postMessage({ cmd: "GetButtonState" });
 }
 
@@ -16,7 +15,6 @@ function initializeButton(value) {
 }
 
 function handleButtonChange(e) {
-    console.log("Handle button change, set button value")
     setButtonState(e.target.checked)
 }
 

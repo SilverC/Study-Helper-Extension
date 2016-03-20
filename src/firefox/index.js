@@ -36,10 +36,6 @@ panel.on("show", function() {
 });
 
 function handleMessage(message) {
-    var ss = require("sdk/simple-storage");
-    console.log("message received in addon")
-    console.log(message);
-    console.log(ss.storage.state);
     if(message.cmd == 'GetButtonState') {
         panel.postMessage(ss.storage.state)
     }
