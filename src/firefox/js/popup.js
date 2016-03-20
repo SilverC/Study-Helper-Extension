@@ -1,13 +1,11 @@
-self.on("message", function(message) {
-   initializeButton(message); 
-});
-
 function setButtonState(state) {
-    self.postMessage({ cmd: "SetButtonState", data: { value: state } });
+    browser.runtime.sendMessage({ cmd: "SetButtonState", data: { value: state } });
 }
 
 function getButtonState() {
-    self.postMessage({ cmd: "GetButtonState" });
+    browser.runtime.sendMessage({ cmd: "GetButtonState" }, function (response) {
+        initializeButton(response);
+    });
 }
 
 function initializeButton(value) {
@@ -18,11 +16,11 @@ function handleButtonChange(e) {
     setButtonState(e.target.checked)
 }
 
-self.port.on('show', function () {
+document.addEventListener('DOMContentLoaded', function () {
       document.getElementById("myonoffswitch").addEventListener('change', handleButtonChange);
 });
 
-self.port.on('show', function () {
+document.addEventListener('DOMContentLoaded', function () {
       getButtonState();
       document.getElementById("onoffswitchlabel").className = "onoffswitch-label";
 });
