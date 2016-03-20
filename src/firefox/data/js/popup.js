@@ -1,8 +1,4 @@
-self.port.on("show", function() {   
-    getButtonState();
-});
-
-self.port.on("message", function(message) {
+self.on("message", function(message) {
    initializeButton(message); 
 });
 
@@ -11,6 +7,7 @@ function setButtonState(state) {
 }
 
 function getButtonState() {
+    console.log("getButtonState");
     self.postMessage({ cmd: "GetButtonState" });
 }
 
@@ -19,16 +16,15 @@ function initializeButton(value) {
 }
 
 function handleButtonChange(e) {
+    console.log("Handle button change, set button value")
     setButtonState(e.target.checked)
 }
 
-window.addEventListener('DOMContentLoaded', function () {
-    console.log("starting popup, adding change listner to popup");
+self.port.on('show', function () {
       document.getElementById("myonoffswitch").addEventListener('change', handleButtonChange);
 });
 
-window.addEventListener('DOMContentLoaded', function () {
-    console.log("starting popup, adding change listner to popup");
+self.port.on('show', function () {
       getButtonState();
       document.getElementById("onoffswitchlabel").className = "onoffswitch-label";
 });

@@ -1,7 +1,10 @@
 var { ToggleButton } = require('sdk/ui/button/toggle');
 var panels = require("sdk/panel");
 var self = require("sdk/self");
-var state = true;
+var ss = require("sdk/simple-storage");
+if(!ss.storage.state) {
+    ss.storage.state = true;
+}
 
 var button = ToggleButton({
   id: "my-button",
@@ -11,22 +14,38 @@ var button = ToggleButton({
     "32": "./images/icon-32.png",
     "64": "./images/icon-64.png"
   },
-  onChange: handleChange
+  onClick: handleChange,
+  onChange: handleChange,
+  onHide: handleHide,
+  value: true
 });
 
 var panel = panels.Panel({
   contentURL: self.data.url("./html/popup.html"),
+  contentScriptFile: self.data.url("./js/popup.js"),
   onHide: handleHide,
   onMessage: handleMessage
 });
 
+// When the panel is displayed it generated an event called
+// "show": we will listen for that event and when it happens,
+// send our own "show" event to the panel's script, so the
+// script can prepare the panel for display.
+panel.on("show", function() {
+  panel.port.emit("show");
+});
+
 function handleMessage(message) {
+    var ss = require("sdk/simple-storage");
     console.log("message received in addon")
+    console.log(message);
+    console.log(ss.storage.state);
     if(message.cmd == 'GetButtonState') {
-        panel.PostMessage(state)
+        panel.postMessage(ss.storage.state)
     }
     else if(message.cmd == 'SetButtonState') {
-        state = message.value;
+        console.log(message.data.value);
+        ss.storage.state = message.data.value;
     }
 }
 
@@ -40,5 +59,4 @@ function handleChange(state) {
 
 function handleHide() {
   button.state('window', {checked: false});
-  self.on(self postmessage, )
 }
