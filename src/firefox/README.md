@@ -1,2 +1,2 @@
 #Study Helper
-Firefox version of this extension
+Firefox version of Study Helper extension
