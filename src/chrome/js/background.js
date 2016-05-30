@@ -1,5 +1,5 @@
 var isExtensionOn = true;
-var urls = ["facebook.com", "twitter.com", "instagram.com", "pinterest.com"];
+var urls = ["facebook.com", "twitter.com", "instagram.com", "pinterest.com", "reddit.com", "buzzfeed.com"];
 
 /*
  * Intercepts browser request and redirects them to local page if they are blocked
