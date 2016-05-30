@@ -11,7 +11,7 @@ $body = @{
 }
 Write-Output $body
 
-$response = Invoke-RestMethod -Method Post -ContentType "application/x-www-form-urlencoded" -Body $body
+$response = Invoke-RestMethod -Method Post -ContentType "application/x-www-form-urlencoded" -Body $body -Uri "https://www.googleapis.com/oauth2/v4/token"
 Write-Output $response
 $token = $response.access_token
 
