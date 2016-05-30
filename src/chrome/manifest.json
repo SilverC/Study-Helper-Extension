@@ -2,8 +2,9 @@
   "manifest_version": 2,
 
   "name": "Study Helper",
+  "short_name": "Study Helper",
   "description": "This extension blocks certain social media sites to help students focus.",
-  "version": "0.2",
+  "version": "0.2.1",
 
   "browser_action": {
     "default_icon": "images/icon-16.png",
