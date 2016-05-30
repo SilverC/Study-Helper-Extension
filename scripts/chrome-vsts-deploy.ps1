@@ -10,7 +10,7 @@ $body = @{
     grant_type = "refresh_token"
 }
 
-Write-Output "Requesting new access toek from Google...."
+Write-Output "Requesting new access token from Google...."
 $response = Invoke-RestMethod -Method Post -ContentType "application/x-www-form-urlencoded" -Body $body -Uri "https://www.googleapis.com/oauth2/v4/token"
 Write-Output "Request for new access token was successful"
 $token = $response.access_token
