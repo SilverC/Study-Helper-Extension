@@ -1,5 +1,5 @@
 var isExtensionOn = true;
-var urls = ["facebook.com", "twitter.com", "instagram.com", "pinterest.com", "reddit.com", "buzzfeed.com"];
+var urls = ["facebook.com", "twitter.com", "instagram.com", "pinterest.com"];
 
 /*
  * Intercepts browser request and redirects them to local page if they are blocked
@@ -13,7 +13,9 @@ function interceptRequest(request)
             for(var url of urls) {
                 if(request.url.indexOf(url) > -1)
                 {
-                    return {redirectUrl: chrome.extension.getURL("html/blocked.html")};
+                    //Bug does not allow for redirection to local resource
+                    //var blockedPage = browser.extension.getURL("html/blocked.html");
+                    return { redirectUrl: "https://google.com" };
                 }  
             }
             
@@ -33,5 +35,5 @@ function buttonStateHandler(request, sender, sendResponse) {
     }
 }
 
-chrome.extension.onMessage.addListener(buttonStateHandler);
-chrome.webRequest.onBeforeRequest.addListener(interceptRequest, {urls: ["<all_urls>"]}, ['blocking']);
+browser.runtime.onMessage.addListener(buttonStateHandler);
+browser.webRequest.onBeforeRequest.addListener(interceptRequest, {urls: ["<all_urls>"]}, ['blocking']);
