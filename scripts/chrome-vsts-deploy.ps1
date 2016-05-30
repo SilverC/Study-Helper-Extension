@@ -22,7 +22,8 @@ $headers.Add("x-goog-api-version", "2")
 Write-Output "Submitting new version of the extension to the store"
 $response = Invoke-RestMethod -Method Put -Headers $headers -InFile $env:FILE_NAME -Uri "https://www.googleapis.com/upload/chromewebstore/v1.1/items/$($env:APP_ID)"
 if($response.uploadState -ne "SUCCESS") {
-    throw "Submitting new version failed with error $($response.itemError)"
+    throw "Submitting new version failed 'n error code= $($response.itemError.error_code) 'n error= $($response.itemError.error_detail)"
+    
 }
 Write-Output "Submission of new version successful. Item is in draft state in the Chrome Web Store"
 
