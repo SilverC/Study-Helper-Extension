@@ -9,18 +9,24 @@ $body = @{
     client_secret = $env:CLIENT_SECRET
     grant_type = "refresh_token"
 }
-Write-Output $body
 
+Write-Output "Requesting new access toek from Google...."
 $response = Invoke-RestMethod -Method Post -ContentType "application/x-www-form-urlencoded" -Body $body -Uri "https://www.googleapis.com/oauth2/v4/token"
-Write-Output $response
+Write-Output "Request for new access token was successful"
 $token = $response.access_token
 
 $headers = @{}
 $headers.Add("Authorization", "Bearer $($token)")
 $headers.Add("x-goog-api-version", "2")
 
-Invoke-RestMethod -Method Put -Headers $headers -InFile $env:FILE_NAME -Uri "https://www.googleapis.com/upload/chromewebstore/v1.1/items/$($env:APP_ID)"
+Write-Output "Submitting new version of the extension to the store"
+$response = Invoke-RestMethod -Method Put -Headers $headers -InFile $env:FILE_NAME -Uri "https://www.googleapis.com/upload/chromewebstore/v1.1/items/$($env:APP_ID)"
+if($response.uploadState -ne "SUCCESS") {
+    throw "Submitting new version failed with error $($response.itemError)"
+}
+Write-Output "Submission of new version successful. Item is in draft state in the Chrome Web Store"
 
+Write-Output "Attempting to publish new version to Chrome Web Store"
 $response = Invoke-RestMethod -Method Post -Headers $headers -Uri "https://www.googleapis.com/chromewebstore/v1.1/items/$($env:APP_ID)/publish"
-
 Write-Output $response
+Write-Output "Publish of new version successful"
