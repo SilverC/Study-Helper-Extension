@@ -3,7 +3,7 @@
 
   "name": "Study Helper",
   "description": "This extension blocks certain social media sites to help students focus.",
-  "version": "0.2",
+  "version": "0.2.1",
   "applications": {
     "gecko": {
         "id": "studyhelper@firefoxextension.org",
