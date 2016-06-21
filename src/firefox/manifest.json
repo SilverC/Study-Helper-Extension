@@ -6,7 +6,8 @@
   "version": "0.2",
   "applications": {
     "gecko": {
-        "id": "studyhelper@firefoxextension.org"
+        "id": "studyhelper@firefoxextension.org",
+        "strict_min_version": "47.0"
     }
   },
   "browser_action": {
